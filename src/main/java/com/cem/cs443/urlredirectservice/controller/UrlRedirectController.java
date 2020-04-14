@@ -16,6 +16,7 @@ import java.util.Optional;
 public class UrlRedirectController
 {
     private final String URL_NOT_FOUND_VIEW = "short_url_not_found";
+    private final String SHORT_URL_EXPIRED = "short_url_expired";
     @Autowired
     private UrlRedirectService urlRedirectService;
 
@@ -23,9 +24,17 @@ public class UrlRedirectController
     public ModelAndView redirect(@PathVariable("short_link") String short_link)
     {
         Optional<UrlLink> urlLink = urlRedirectService.getOrgUrlLink(short_link);
-        return urlLink
-                .map(link -> new ModelAndView("redirect:" + link.getOriginalUrl()))
-                .orElseGet(() -> new ModelAndView(URL_NOT_FOUND_VIEW));
+        if(!urlLink.get().getIsExpired())
+        {
+            return urlLink
+                    .map(link -> new ModelAndView("redirect:" + link.getOriginalUrl()))
+                    .orElseGet(() -> new ModelAndView(URL_NOT_FOUND_VIEW));
+        }
+        else
+        {
+            return new ModelAndView(SHORT_URL_EXPIRED);
+        }
+
     }
 
 }
