@@ -24,17 +24,20 @@ public class UrlRedirectController
     public ModelAndView redirect(@PathVariable("short_link") String short_link)
     {
         Optional<UrlLink> urlLink = urlRedirectService.getOrgUrlLink(short_link);
-        if(!urlLink.get().getIsExpired())
+        if(urlLink.isPresent())
         {
-            return urlLink
-                    .map(link -> new ModelAndView("redirect:" + link.getOriginalUrl()))
-                    .orElseGet(() -> new ModelAndView(URL_NOT_FOUND_VIEW));
+            if(!urlLink.get().getIsExpired())
+            {
+                return new ModelAndView("redirect:" + urlLink.get().getOriginalUrl());
+            }
+            else
+            {
+                return new ModelAndView(SHORT_URL_EXPIRED);
+            }
         }
-        else
-        {
-            return new ModelAndView(SHORT_URL_EXPIRED);
+        else {
+            return new ModelAndView(URL_NOT_FOUND_VIEW);
         }
-
     }
 
 }
