@@ -8,7 +8,7 @@ import javax.persistence.*;
 import java.util.Date;
 
 @Entity
-@Table(name = "short_links")
+@Table(name = "url_records")
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,7 +33,7 @@ public class UrlLink
     @Column(name = "short_url", unique = true)
     private String shortUrl;
 
-    @Column(name = "original_url")
+    @Column(name = "target_url")
     private String originalUrl;
 
     public UrlLink(Long userId, String originalUrl, String shortUrl, Date expirationTime) {
