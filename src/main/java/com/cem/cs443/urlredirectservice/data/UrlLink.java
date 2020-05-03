@@ -45,4 +45,9 @@ public class UrlLink
         this.isExpired = Boolean.FALSE;
         this.hitCount = 0;
     }
+
+    public void incrementHitcount()
+    {
+        hitCount++;
+    }
 }
