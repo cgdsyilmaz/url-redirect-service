@@ -3,7 +3,7 @@ package com.cem.cs443.urlredirectservice.service;
 import com.cem.cs443.urlredirectservice.data.UrlLink;
 import com.cem.cs443.urlredirectservice.data.UrlRedirectRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,5 +19,11 @@ public class UrlRedirectServiceImpl implements UrlRedirectService
     @Override
     public Optional<UrlLink> getOrgUrlLink(String shortUrl) {
         return urlRedirectRepository.findByShortUrl(shortUrl);
+    }
+
+    @Override
+    @Async
+    public void updateURLLink(UrlLink urlLink) {
+        urlRedirectRepository.save(urlLink);
     }
 }

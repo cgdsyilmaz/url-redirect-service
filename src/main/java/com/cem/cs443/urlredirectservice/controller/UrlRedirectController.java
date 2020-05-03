@@ -29,6 +29,7 @@ public class UrlRedirectController
             if(!urlLink.get().getIsExpired())
             {
                 urlLink.get().incrementHitcount();
+                urlRedirectService.updateURLLink(urlLink.get());
                 return new ModelAndView("redirect:" + urlLink.get().getOriginalUrl());
             }
             else

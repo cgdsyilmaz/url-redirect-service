@@ -7,4 +7,5 @@ import java.util.Optional;
 public interface UrlRedirectService
 {
     Optional<UrlLink> getOrgUrlLink(String shortUrl);
+    void updateURLLink(UrlLink urlLink);
 }
